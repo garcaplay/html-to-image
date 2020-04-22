@@ -92,6 +92,7 @@ function getCssRules(styleSheets: CSSStyleSheet[]): Promise<CSSStyleRule[]> {
   // First loop inlines imports
   styleSheets.forEach((sheet) => {
     if ("cssRules" in sheet) {
+      console.log("LO INCLUYE", sheet);
       try {
         toArray<CSSRule>(sheet.cssRules).forEach((item: CSSRule) => {
           if (item.type === CSSRule.IMPORT_RULE) {
@@ -131,7 +132,7 @@ function getCssRules(styleSheets: CSSStyleSheet[]): Promise<CSSStyleRule[]> {
               })
           );
         }
-        console.log("Error inlining remote css file", e.toString());
+        console.log("Error inlining remote css file", sheet);
       }
     }
   });
@@ -140,7 +141,6 @@ function getCssRules(styleSheets: CSSStyleSheet[]): Promise<CSSStyleRule[]> {
     // Second loop parses rules
     styleSheets.forEach((sheet) => {
       if ("cssRules" in sheet) {
-        console.log("LO INCLUYE", sheet);
         try {
           toArray<CSSStyleRule>(sheet.cssRules).forEach(
             (item: CSSStyleRule) => {
